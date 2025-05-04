@@ -89,18 +89,22 @@
 
     <div class="module" id="CS1870">
         <h2>CS1870 - Machine Fundamentals</h2>
-        <label>Exercise 1 (2.22%): <input type="number" id="cs1870-ex1" min="0" max="100"></label><br />
-        <label>Exercise 2 (2.22%): <input type="number" id="cs1870-ex2" min="0" max="100"></label><br />
-        <label>Exercise 3 (2.22%): <input type="number" id="cs1870-ex3" min="0" max="100"></label><br />
-        <label>Exercise 4 (2.22%): <input type="number" id="cs1870-ex4" min="0" max="100"></label><br />
-        <label>Exercise 5 (2.22%): <input type="number" id="cs1870-ex5" min="0" max="100"></label><br />
-        <label>Exercise 6 (2.22%): <input type="number" id="cs1870-ex6" min="0" max="100"></label><br />
-        <label>Exercise 7 (2.22%): <input type="number" id="cs1870-ex7" min="0" max="100"></label><br />
-        <label>Exercise 8 (2.22%): <input type="number" id="cs1870-ex8" min="0" max="100"></label><br />
-        <label>Exercise 9 (2.22%): <input type="number" id="cs1870-ex9" min="0" max="100"></label><br /><br />
+        <p>Enter the marks you earned for each exercise:</p>
+
+        <label>Exercise 1 (19): <input type="number" id="cs1870-ex1" min="0" max="19"></label><br />
+        <label>Exercise 2 (25): <input type="number" id="cs1870-ex2" min="0" max="25"></label><br />
+        <label>Exercise 3 (29): <input type="number" id="cs1870-ex3" min="0" max="29"></label><br />
+        <label>Exercise 4 (22): <input type="number" id="cs1870-ex4" min="0" max="22"></label><br />
+        <label>Exercise 5 (28): <input type="number" id="cs1870-ex5" min="0" max="28"></label><br />
+        <label>Exercise 6 (24): <input type="number" id="cs1870-ex6" min="0" max="24"></label><br />
+        <label>Exercise 7 (16): <input type="number" id="cs1870-ex7" min="0" max="16"></label><br />
+        <label>Exercise 8 (23): <input type="number" id="cs1870-ex8" min="0" max="23"></label><br />
+        <label>Exercise 9 (14): <input type="number" id="cs1870-ex9" min="0" max="14"></label><br /><br />
+
         <button onclick="calculateCS1870()">Calculate Required Exam Marks</button>
         <div class="result" id="cs1870-result"></div>
     </div>
+
 
 
 
@@ -279,19 +283,22 @@
 
 
         function calculateCS1870() {
-            let total = 0;
-            const resultEl = document.getElementById('cs1870-result');
+            const maxMarks = [19, 25, 29, 22, 28, 24, 16, 23, 14];
+            let earnedMarks = 0;
+            let totalPossible = 0;
 
             for (let i = 1; i <= 9; i++) {
                 const mark = parseFloat(document.getElementById(`cs1870-ex${i}`).value);
-                if (isNaN(mark)) {
-                    resultEl.textContent = "Please enter all exercise marks.";
-                    return;
+                if (!isNaN(mark)) {
+                    earnedMarks += mark;
                 }
-                total += mark;
+                totalPossible += maxMarks[i - 1];
             }
-            total = total * (1 / 45); // Each exercise is worth 2.22%
 
+            // Scale coursework to 20% of total module grade
+            const courseworkScore = (earnedMarks / totalPossible) * 20;
+
+            // Final exam weight
             const examWeight = 0.80;
 
             const targets = [
@@ -303,16 +310,16 @@
 
             let output = `<table border="1"><thead><tr><th>Target</th><th>Required Exam Mark</th></tr></thead><tbody>`;
             for (const t of targets) {
-                const requiredExam = Math.ceil((t.value - total) / examWeight);
+                const requiredExam = Math.ceil((t.value - courseworkScore) / examWeight);
                 const resultText = requiredExam > 100 ? "❌ Over 100%" :
                     requiredExam <= 0 ? "✅ Already achieved" :
                         `${requiredExam}%`;
                 output += `<tr><td>${t.label}</td><td>${resultText}</td></tr>`;
             }
             output += "</tbody></table>";
-            resultEl.innerHTML = output;
-        }
 
+            document.getElementById('cs1870-result').innerHTML = output;
+        }
 
 
     </script>
