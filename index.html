@@ -34,12 +34,13 @@
     <p>To use this calculator, input your scores as a percentage, e.g. input "30" if you scored 30%</p>
     <p>You may find it useful to screenshot the results</p>
 
-    <div class="module">
-        <h2>Module results may already be out!</h2>
-        <p>This page is now useless.</p>
+    <div class="module" id="countdown-module">
+        <h2>📆 Countdown to Results Day (9th July)</h2>
+        <p id="countdown-timer">Calculating...</p>
         <a href="https://winstonung.github.io/Year-1-results/">Here's a link to a new calculator I made.</a>
-        <p></p>
     </div>
+
+
     <div class="module" id="CS1811">
         <h2>CS1811 - Object-Oriented Programming I</h2>
         <label>
@@ -327,6 +328,33 @@
 
             document.getElementById('cs1870-result').innerHTML = output;
         }
+        
+        function startCountdown() {
+        const countdownEl = document.getElementById("countdown-timer");
+        const targetDate = new Date("2025-07-09T00:00:00"); // July 9, 2025, at midnight
+    
+        function updateCountdown() {
+            const now = new Date();
+            const diff = targetDate - now;
+    
+            if (diff <= 0) {
+                countdownEl.textContent = "🎉 It's Results Day!";
+                return;
+            }
+    
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((diff / (1000 * 60)) % 60);
+            const seconds = Math.floor((diff / 1000) % 60);
+    
+            countdownEl.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s until results are released`;
+        }
+    
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    }
+    
+    startCountdown();
 
 
     </script>
