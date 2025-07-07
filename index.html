@@ -350,7 +350,7 @@
             if (!isBST) {
                 const p = document.createElement("p");
                 p.style.marginTop = "0.5em";
-                p.innerHTML = `🕒 Your local release time: <strong>${localTimeStr}</strong>`;
+                p.innerHTML = `Your local release time: <strong>${localTimeStr}</strong>`;
                 countdownEl.parentElement.insertBefore(p, countdownEl.nextSibling);
             }
         
@@ -359,7 +359,7 @@
                 const diff = targetUTC - now;
         
                 if (diff <= 0) {
-                    countdownEl.textContent = "🎉 Results are out!";
+                    countdownEl.textContent = "Results are out!";
                     return;
                 }
         
