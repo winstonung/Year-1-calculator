@@ -330,54 +330,53 @@
         }
         
         function startCountdown() {
-        const countdownEl = document.getElementById("countdown-timer");
-    
-        // Target time: July 9, 2025 at 14:00 BST (UTC+1)
-        const targetUTC = new Date(Date.UTC(2025, 6, 9, 13, 0, 0)); // Month is 0-indexed
-    
-        // Calculate user's local time equivalent
-        const localTime = new Date(targetUTC);
-        const localTimeStr = localTime.toLocaleTimeString(undefined, {
-            hour: '2-digit',
-            minute: '2-digit',
-            timeZoneName: 'short'
-        });
-    
-        // Check if user's time zone is not BST (UTC+1) and display local time
-        const timeZoneOffset = new Date().getTimezoneOffset(); // in minutes
-        const isBST = timeZoneOffset === -60; // BST = UTC+1 = -60 min offset
-    
-        if (!isBST) {
-            const p = document.createElement("p");
-            p.style.marginTop = "0.5em";
-            p.innerHTML = `🕒 Your local release time: <strong>${localTimeStr}</strong>`;
-            countdownEl.parentElement.insertBefore(p, countdownEl.nextSibling);
-        }
-    
-        function updateCountdown() {
-            const now = new Date();
-            const diff = targetUTC - now;
-    
-            if (diff <= 0) {
-                countdownEl.textContent = "🎉 Results are out!";
-                return;
+            const countdownEl = document.getElementById("countdown-timer");
+        
+            // Target time: July 9, 2025 at 14:00 BST (UTC+1)
+            const targetUTC = new Date(Date.UTC(2025, 6, 9, 13, 0, 0)); // Month is 0-indexed
+        
+            // Calculate user's local time equivalent
+            const localTime = new Date(targetUTC);
+            const localTimeStr = localTime.toLocaleTimeString(undefined, {
+                hour: '2-digit',
+                minute: '2-digit',
+                timeZoneName: 'short'
+            });
+        
+            // Check if user's time zone is not BST (UTC+1) and display local time
+            const timeZoneOffset = new Date().getTimezoneOffset(); // in minutes
+            const isBST = timeZoneOffset === -60; // BST = UTC+1 = -60 min offset
+        
+            if (!isBST) {
+                const p = document.createElement("p");
+                p.style.marginTop = "0.5em";
+                p.innerHTML = `🕒 Your local release time: <strong>${localTimeStr}</strong>`;
+                countdownEl.parentElement.insertBefore(p, countdownEl.nextSibling);
+            }
+        
+            function updateCountdown() {
+                const now = new Date();
+                const diff = targetUTC - now;
+        
+                if (diff <= 0) {
+                    countdownEl.textContent = "🎉 Results are out!";
+                    return;
+                }
+        
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+                const minutes = Math.floor((diff / (1000 * 60)) % 60);
+                const seconds = Math.floor((diff / 1000) % 60);
+        
+                countdownEl.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s until results are released`;
             }
     
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-            const minutes = Math.floor((diff / (1000 * 60)) % 60);
-            const seconds = Math.floor((diff / 1000) % 60);
-    
-            countdownEl.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s until results are released`;
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
         }
     
-        updateCountdown();
-        setInterval(updateCountdown, 1000);
-    }
-    
-    startCountdown();
-
-
+        startCountdown();
+        
     </script>
 
 </body>
